@@ -1,8 +1,14 @@
 import React from 'react';
 
+import { Compartment } from './CalendaryInformation.css';
+import { InformationElement } from './Items';
+
 function CalendaryInformation() {
     return (
-        <div></div>
+        <>
+            <Compartment></Compartment>
+            <InformationElement></InformationElement>
+        </>
     )
 }
 

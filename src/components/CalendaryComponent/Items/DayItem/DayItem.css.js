@@ -6,17 +6,22 @@ export const Day = styled.li`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    flex-basis: 10vw;
-    height: 10vw;
+    flex-basis: 13vw;
+    height: 13vw;
     list-style: none;
     font-size: 1.5rem;
     ${({ isActive }) => isActive ? 'color: #222;' : 'color: #bbb;'}
     ${({ isFocus }) => isFocus ?
         `
-    color: white;
-    background-color: cadetblue;
-    border-radius: 50%;
-    ` : ''}
+        color: white;
+        background-color: cadetblue;
+        border-radius: 50%;
+        ` : ''}
+        @media(min-width: 650px)
+    {
+        flex-basis: 55px;
+        height: 55px;
+    }
 `;
 
 export const Dott = styled.div`
@@ -29,4 +34,9 @@ export const Dott = styled.div`
     background-color: #555;
     border-radius: 50%;
     ${({ isFocus }) => isFocus ? `background-color: white;` : ''}
+
+    @media(min-width: 650px)
+    {
+        top: 7px;
+    }
 `;

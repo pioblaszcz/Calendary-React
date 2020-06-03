@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 
 import { CalendaryContainer, HeaderCalendaryContainer, MainCalendaryContainer, H1, I, Days, DayItem, DayList } from './Calendary.css';
+import { changeMonth } from '../../redux/actions/actions';
 import { Day } from './Items';
 
 import { DateScript } from './Scripts';
 
-function Calendary() {
+function Calendary({ change_month, importantDays }) {
 
-    let DayTab = DateScript();
+    const month = new Date().getMonth();
+    let DayTab = DateScript(month);
 
-    DayTab = DayTab.map((item, id) => <Day key={id} day={item.day} isActive={item.isAtive} isFocus={item.isFocus} />)
+    DayTab = useMemo(
+        () =>
+            DayTab.map((item, id) => {
+                let important = false;
+                importantDays.map(importantDay => importantDay.day === item.day && month === importantDay.month ? important = true : null);
+                return <Day
+                    key={id}
+                    day={item.day}
+                    isActive={item.isAtive}
+                    dayActive={item.dayActive}
+                    importantDay={important}
+                />
+            }),
+        [DayTab, importantDays, month]
+    )
+
+    change_month(month)
 
     return (
         <CalendaryContainer>
@@ -36,4 +55,12 @@ function Calendary() {
     )
 }
 
-export default Calendary;
+const mapDispatchToProps = dispatch => ({
+    change_month: month => dispatch(changeMonth(month)),
+});
+
+const mapStateToProps = state => ({
+    importantDays: state.importantDays,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendary);

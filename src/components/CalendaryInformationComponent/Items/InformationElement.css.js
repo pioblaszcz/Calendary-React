@@ -26,8 +26,8 @@ export const AddInformation = styled.div`
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 50px;
-    height: 50px;
+    width: 13vw;
+    height: 13vw;
     background-color: white;
     border-radius: 50%;
     border: 1px solid #ccc;
@@ -44,5 +44,7 @@ export const AddInformation = styled.div`
     @media(min-width: 650px)
     {
         right: 40px;
+        width: 55px;
+        height: 55px;
     }
 `;

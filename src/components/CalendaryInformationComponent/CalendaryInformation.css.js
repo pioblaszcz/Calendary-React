@@ -5,6 +5,5 @@ export const Compartment = styled.div`
     height: 5px;
     margin: 0 auto;
     border-radius: 25%;
-    background-color: #bbb;
-
+    background-color: ${({ isWhite }) => isWhite ? '#bbb;' : '#777'};
 `;

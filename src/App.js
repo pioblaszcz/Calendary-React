@@ -1,17 +1,26 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { connect } from 'react-redux';
 
-import { Calendary } from './components';
-import { CalendaryInformation } from './components'
+import { Calendary, CalendaryInformation, AddEventComponent } from './components';
 
-import StyleProvider from './StyleProvider';
+import { DefaultStylesApp, theme } from './DefaultStylesApp';
 
-function App() {
+function App({ isWhite }) {
+
   return (
-    <StyleProvider>
-      <Calendary />
-      <CalendaryInformation />
-    </StyleProvider>
+    <ThemeProvider theme={theme}>
+      <DefaultStylesApp isWhite={isWhite}>
+        <Calendary />
+        <CalendaryInformation />
+        <AddEventComponent />
+      </DefaultStylesApp>
+    </ThemeProvider>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isWhite: state.isWhite,
+})
+
+export default connect(mapStateToProps, null)(App);

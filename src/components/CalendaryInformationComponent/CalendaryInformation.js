@@ -1,15 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Compartment } from './CalendaryInformation.css';
 import { InformationElement } from './Items';
 
-function CalendaryInformation() {
+function CalendaryInformation({ isWhite }) {
     return (
         <>
-            <Compartment></Compartment>
+            <Compartment isWhite={isWhite}></Compartment>
             <InformationElement></InformationElement>
         </>
     )
 }
 
-export default CalendaryInformation;
+const mapStateToProps = state => ({
+    isWhite: state.isWhite,
+})
+
+export default connect(mapStateToProps, null)(CalendaryInformation);

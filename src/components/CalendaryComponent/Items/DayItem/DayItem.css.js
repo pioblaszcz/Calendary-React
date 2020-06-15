@@ -101,6 +101,11 @@ export const DayInside = styled.div`
             transform: translate(calc(63vw - ${activeDayNumber}px), calc(72.2vh - ${moveHeight} * 13vw - ${moveHeight} * -5px));
         }
 
+        @media (max-width: 360px) and (max-height: 740px)
+        {
+            transform: translate(calc(63vw - ${activeDayNumber}px), calc(72.2vh - ${moveHeight} * 13vw));
+        }
+
         @media (max-width: 360px) and (max-height: 640px)
         {
             transform: translate(calc(63vw - ${activeDayNumber}px), calc(72.2vh - ${moveHeight} * 13vw - ${moveHeight} * -5px));

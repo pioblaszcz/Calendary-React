@@ -1,4 +1,16 @@
 
+import {
+    CHANGE_ACTIVE_DAY,
+    CHANGE_FOCUS_DAY,
+    ADD_IMPORTANT_DAY,
+    DELATE_DAY,
+    CHANGE_MONTH,
+    CHANGE_CONFIRMED,
+    CHANGE_COLOR,
+    ADD_EVENT,
+    SHOW_OR_HIDE_SETTINGS,
+} from '../constants';
+
 const initialState = {
     month: new Date().getMonth(),
     monthNow: new Date().getMonth(),
@@ -15,58 +27,58 @@ export default function (state = initialState, action) {
 
     switch (action.type) {
 
-        case "CHANGE_ACTIVE_DAY":
+        case CHANGE_ACTIVE_DAY:
             return {
                 ...state,
                 activeDay: action.payload,
             }
 
-        case "CHANGE_FOCUS_DAY":
+        case CHANGE_FOCUS_DAY:
             return {
                 ...state,
                 dayFocus: action.payload,
             }
 
-        case "CHANGE_MONTH":
-            return {
-                ...state,
-                month: action.payload,
-            }
-
-        case "ADD_EVENT":
-            return {
-                ...state,
-                isAddClicked: !state.isAddClicked,
-            }
-
-        case "SHOW_OR_HIDE_SETTINGS":
-            return {
-                ...state,
-                isSettingsClicked: !state.isSettingsClicked,
-            }
-
-        case "ADD_IMPORTANT_DAY":
+        case ADD_IMPORTANT_DAY:
             return {
                 ...state,
                 importantDays: [...state.importantDays, action.payload]
             }
 
-        case "CHANGE_CONFIRMED":
-            return {
-                ...state,
-                isConfirmed: action.payload,
-            }
-
-        case "DELATE_DAY":
+        case DELATE_DAY:
             return {
                 ...state,
                 importantDays: action.payload,
             }
 
-        case "CHANGE_COLOR":
+        case CHANGE_MONTH:
+            return {
+                ...state,
+                month: action.payload,
+            }
+
+        case CHANGE_CONFIRMED:
+            return {
+                ...state,
+                isConfirmed: action.payload,
+            }
+
+        case CHANGE_COLOR:
             return {
                 ...state,
                 isWhite: !state.isWhite,
+            }
+
+        case ADD_EVENT:
+            return {
+                ...state,
+                isAddClicked: !state.isAddClicked,
+            }
+
+        case SHOW_OR_HIDE_SETTINGS:
+            return {
+                ...state,
+                isSettingsClicked: !state.isSettingsClicked,
             }
         default:
             return {

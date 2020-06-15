@@ -4,34 +4,13 @@ import { connect } from 'react-redux';
 import { Day, DayInside, Dott } from './DayItem.css';
 import { changeFocusDay, changeActiveDay, } from '../../../../redux/actions/actions';
 
-function DayItem({
-    day,
-    isActive,
-    importantDay,
-    change_focus_day,
-    dayFocus,
-    activeDay,
-    isWhite,
-    month,
-    active_month,
-    monthNow,
-    set_move_to_next,
-    set_move_to_prev,
-}) {
+let isFocus = false;
+let moveDay;
+let moveHeight;
 
-    let isFocus = false;
-    useMemo(() => {
-        if (dayFocus[0] === day) isFocus = true;
-        else isFocus = false;
-    }, [dayFocus, day, isWhite, importantDay, active_month])
+const setMove = (activeDayNumber) => {
 
-    let dayActive = false;
-    if (day === activeDay && month === monthNow) dayActive = true;
-
-    let activeDayNumber = new Date().getDate();
-    let moveHeight = 0;
-
-    console.log(activeDayNumber)
+    let moveHeight;
 
     if (activeDayNumber / 7 > 1 && activeDayNumber / 7 <= 2) moveHeight = 1;
     else if (activeDayNumber / 7 > 2 && activeDayNumber / 7 <= 3) moveHeight = 2.4;
@@ -48,22 +27,56 @@ function DayItem({
     else if (activeDayNumber === 6) activeDayNumber = 270;
     else if (activeDayNumber === 0) activeDayNumber = 340;
 
+    return { activeDayNumber, moveHeight };
+}
+
+function DayItem({
+    day,
+    isActive,
+    importantDay,
+    change_focus_day,
+    dayFocus,
+    activeDay,
+    isWhite,
+    month,
+    active_month,
+    monthNow,
+}) {
+    useMemo(() => {
+        if (dayFocus[0] === day) isFocus = true;
+        else isFocus = false;
+    }, [dayFocus, day])
+
+    let dayActive = false;
+    if (day === activeDay && month === monthNow) dayActive = true;
+
+    useMemo(() => {
+        moveDay = setMove(activeDay).activeDayNumber;
+        moveHeight = setMove(activeDay).moveHeight;
+    }, [activeDay])
+
     return (
         <Day
             isWhite={isWhite}
             isActive={isActive}
-            dayActive={activeDay === day && isActive && month === new Date().getMonth() ? true : false}
-            isFocus={dayFocus[0] === day && isActive && dayFocus[1] === active_month}
-            onClick={() => change_focus_day(day, active_month)}>
+            dayActive={activeDay === day && isActive && month === monthNow ? true : false}
+            isFocus={dayFocus[0] === day && isActive && dayFocus[1] === active_month && month === active_month}
+            onClick={() => change_focus_day(day, monthNow)}>
             {day}
-            {dayActive && isActive
-                ? <DayInside
-                    isWhite={isWhite}
-                    activeDayNumber={activeDayNumber}
-                    moveHeight={moveHeight}
-                    animationActive={dayActive !== isFocus && active_month === monthNow ? true : false}
-                    isFixed={month !== monthNow ? true : false}
-                ><p>{day}</p></DayInside> : null}
+            {
+                dayActive && isActive
+                    ?
+                    <DayInside
+                        isWhite={isWhite}
+                        activeDayNumber={moveDay}
+                        moveHeight={moveHeight}
+                        animationActive={dayActive !== isFocus && active_month === monthNow ? true : false}
+                        isFixed={month !== monthNow ? true : false}
+                    >
+                        <p>{day}</p>
+                    </DayInside>
+                    : null
+            }
             {importantDay && isActive ? <Dott dayActive={dayActive} isFocus={isFocus} /> : null}
         </Day>
     )

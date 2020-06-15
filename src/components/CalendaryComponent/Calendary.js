@@ -7,18 +7,27 @@ import { Day } from './Items';
 
 import { DateScript } from './Scripts';
 
-function Calendary({ change_month, importantDays, change_color, isWhite, month_active, monthNow, activeDay, change_focus_day, show_settinigs }) {
+function Calendary({
+    change_month,
+    importantDays,
+    change_color,
+    isWhite,
+    month_active,
+    monthNow,
+    activeDay,
+    change_focus_day,
+    show_settinigs
+}) {
 
     const [showSettings, setShowSettings] = useState(false);
     const [variable, setVariable] = useState(monthNow * 8.33);
 
-    let month = new Date().getMonth();
-    let DayTab = []
-    for (let i = 0; i < 12; i++) {
-        DayTab.push(DateScript(i))
-    }
+    let DayTab = [];
 
-    const months = DayTab.map(day => day.month)
+    for (let i = 0; i < 12; i++) DayTab.push(DateScript(i));
+
+    const months = DayTab.map(day => day.month);
+
     DayTab = useMemo(
         () =>
             DayTab.map(days => days.DayTab.map((item, id) => {
@@ -41,7 +50,6 @@ function Calendary({ change_month, importantDays, change_color, isWhite, month_a
     }
     if (month_active > 11) change_month(11);
 
-    month = month_active;
     let monthsShort = ['Sty', 'Lut', 'Marz', 'Kwie', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Grdz'];
 
     return (
@@ -51,14 +59,14 @@ function Calendary({ change_month, importantDays, change_color, isWhite, month_a
                     <H1>
                         <i className="fas fa-sort-up arrowFirst" onClick={() => {
                             if (month_active > 0) {
-                                change_month(month - 1);
+                                change_month(month_active - 1);
                                 setVariable(variable - 8.33);
                             }
                         }}></i>
-                        2020 {monthsShort[month]}
+                        2020 {monthsShort[month_active]}
                         <i className="fas fa-sort-up arrowSecond" onClick={() => {
                             if (month_active < 11) {
-                                change_month(month + 1);
+                                change_month(month_active + 1);
                                 setVariable(variable + 8.33);
                             }
                         }}></i>

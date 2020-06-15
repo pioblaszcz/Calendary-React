@@ -72,7 +72,7 @@ export const AddInformation = styled.div`
     }
 `;
 
-export const P = styled.p`
+export const P = styled.div`
         margin: 0 0 10px 20px;
         display: inline-block;
         background-color: transparent;

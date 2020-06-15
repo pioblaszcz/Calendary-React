@@ -13,7 +13,6 @@ function InformationElement({ importantDays, dayFocus, add_event, change_confirm
     const delateDay = day => {
         console.log(day);
         importantDays = importantDays.filter(importantDay => importantDay.description !== day.description);
-        console.log()
         delate_day(importantDays);
         change_confirmed(true)
     }

@@ -3,12 +3,13 @@ import styled from 'styled-components';
 export const AddComponentContainer = styled.div`
     z-index: 20000;
     position: absolute;
-    background-color: ${({ isWhite, theme }) => isWhite ? `${theme.colors.defaultBgc};` : `${theme.colors.defaultBgcDark};`};
+    background-color: ${({ isWhite, theme }) => isWhite ? `${theme.colors.defaultBgc}` : `${theme.colors.defaultBgcDark}`};
     top: 0;
     left: 100%;
     width: 100%;
     height: 100%;
     transition: .7s;
+    z-index: 1000000;
     ${({ isAddClicked }) => isAddClicked ? `
         transform: translateX(-100%);
     ` : ''}

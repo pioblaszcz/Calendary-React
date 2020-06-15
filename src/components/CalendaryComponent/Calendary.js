@@ -1,81 +1,132 @@
 import React, { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { CalendaryContainer, HeaderCalendaryContainer, MainCalendaryContainer, H1, I, Days, DayItem, DayList } from './Calendary.css';
-import { changeMonth, changeFocusDay, changeColor } from '../../redux/actions/actions';
+import { CalendaryContainer, HeaderCalendaryContainer, MainCalendaryContainer, H1, I, Days, DayItem, DayList, BackToActiveDay } from './Calendary.css';
+import { changeMonth, changeColor, changeFocusDay, showOrHiiideSettings } from '../../redux/actions/actions';
 import { Day } from './Items';
 
 import { DateScript } from './Scripts';
 
-function Calendary({ change_month, importantDays, change_color, isWhite }) {
+function Calendary({ change_month, importantDays, change_color, isWhite, month_active, monthNow, activeDay, change_focus_day, show_settinigs }) {
 
     const [showSettings, setShowSettings] = useState(false);
+    const [variable, setVariable] = useState(monthNow * 8.33);
 
-    const month = new Date().getMonth();
-    let DayTab = DateScript(month);
+    let month = new Date().getMonth();
+    let DayTab = []
+    for (let i = 0; i < 12; i++) {
+        DayTab.push(DateScript(i))
+    }
+
+    const months = DayTab.map(day => day.month)
     DayTab = useMemo(
         () =>
-            DayTab.map((item, id) => {
+            DayTab.map(days => days.DayTab.map((item, id) => {
                 let important = false;
-                importantDays.map(importantDay => importantDay ? (importantDay.day === item.day && month === importantDay.month ? important = true : null) : null);
+                importantDays.map(importantDay => importantDay ? (importantDay.day === item.day && month_active === importantDay.month ? important = true : null) : null);
                 return <Day
                     key={id}
                     day={item.day}
                     isActive={item.isAtive}
-                    dayActive={item.dayActive}
                     importantDay={important}
+                    month={days.month}
                 />
-            }),
-        [DayTab, importantDays, month]
+            })),
+        [DayTab, importantDays, month_active]
     )
 
-    change_month(month)
+    if (month_active < 0) {
+        change_month(0);
+        return;
+    }
+    if (month_active > 11) change_month(11);
+
+    month = month_active;
+    let monthsShort = ['Sty', 'Lut', 'Marz', 'Kwie', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Grdz'];
 
     return (
-        <CalendaryContainer>
-            <HeaderCalendaryContainer isWhite={isWhite}>
-                <H1>2020 Cze</H1>
-                <I className="far fa-calendar-alt" onClick={() => change_color()}></I>
-                <I className="fas fa-ellipsis-v" dots={true} onClick={() => setShowSettings(true)}></I>
-                {showSettings ? (
-                    <div>
-                        <i className="fas fa-times" onClick={() => setShowSettings(false)}></i>
-                        <span className="first"><i className="fas fa-cog"></i>Ustawienia</span>
-                        <span className="second"><i className="fas fa-user"></i><a
-                            href="https://github.com/pioblaszcz"
-                            target="_blank"
-                            rel="noopener noreferrer">AUTOR</a></span>
-                    </div>
+        <>
+            <CalendaryContainer>
+                <HeaderCalendaryContainer isWhite={isWhite}>
+                    <H1>
+                        <i className="fas fa-sort-up arrowFirst" onClick={() => {
+                            if (month_active > 0) {
+                                change_month(month - 1);
+                                setVariable(variable - 8.33);
+                            }
+                        }}></i>
+                        2020 {monthsShort[month]}
+                        <i className="fas fa-sort-up arrowSecond" onClick={() => {
+                            if (month_active < 11) {
+                                change_month(month + 1);
+                                setVariable(variable + 8.33);
+                            }
+                        }}></i>
+                    </H1>
+                    <I className="far fa-calendar-alt" onClick={() => change_color()}></I>
+                    <I className="fas fa-ellipsis-v" dots={true} onClick={setShowSettings}></I>
+                    {showSettings ? (
+                        < div >
+                            <i className="fas fa-times" onClick={() => setShowSettings(false)}></i>
+                            <span className="first" onClick={() => {
+                                show_settinigs();
+                                setShowSettings(false);
+                            }}><i className="fas fa-cog"></i>Ustawienia</span>
+                            <span className="second"><i className="fas fa-user"></i><a
+                                href="https://github.com/pioblaszcz"
+                                target="_blank"
+                                rel="noopener noreferrer">AUTOR</a></span>
+                        </div>
+                    ) : null
+                    }
+                    <Days>
+                        <DayItem>PON</DayItem>
+                        <DayItem>WTO</DayItem>
+                        <DayItem>ŚRO</DayItem>
+                        <DayItem>CZW</DayItem>
+                        <DayItem>PIĄ</DayItem>
+                        <DayItem>SOB</DayItem>
+                        <DayItem>NDZ</DayItem>
+                    </Days>
+                </HeaderCalendaryContainer >
+                <MainCalendaryContainer
+                    moveRight={month_active < months[5] ? { bool: true, var: variable } : false}
+                    moveLeft={month_active > months[5] ? { bool: true, var: variable } : false}
+                    move={month_active === months[5] ? variable : false}
+                >
+                    {DayTab.map((day, id) => (<DayList key={id}>{day}</DayList>))}
+                </MainCalendaryContainer>
+            </CalendaryContainer >
+            {
+                month_active !== monthNow ? (
+                    <BackToActiveDay
+                        onClick={() => {
+                            change_month(monthNow);
+                            setVariable(monthNow * 8.33);
+                            change_focus_day(activeDay, monthNow);
+                        }}
+                    >
+                        <p>{activeDay}</p>
+                    </BackToActiveDay>
                 ) : null
-                }
-                <Days>
-                    <DayItem>PON</DayItem>
-                    <DayItem>WTO</DayItem>
-                    <DayItem>ŚRO</DayItem>
-                    <DayItem>CZW</DayItem>
-                    <DayItem>PIĄ</DayItem>
-                    <DayItem>SOB</DayItem>
-                    <DayItem>NDZ</DayItem>
-                </Days>
-            </HeaderCalendaryContainer >
-            <MainCalendaryContainer>
-                <DayList>
-                    {DayTab}
-                </DayList>
-            </MainCalendaryContainer>
-        </CalendaryContainer >
+            }
+        </>
     )
 }
 
 const mapDispatchToProps = dispatch => ({
     change_month: month => dispatch(changeMonth(month)),
-    change_focus_day: day => dispatch(changeFocusDay(day)),
+    change_focus_day: (day, month) => dispatch(changeFocusDay(day, month)),
     change_color: () => dispatch(changeColor()),
+    show_settinigs: () => dispatch(showOrHiiideSettings()),
 });
 
 const mapStateToProps = state => ({
     importantDays: state.importantDays,
     isWhite: state.isWhite,
+    activeDay: state.activeDay,
+    month_active: state.month,
+    monthNow: state.monthNow,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendary);

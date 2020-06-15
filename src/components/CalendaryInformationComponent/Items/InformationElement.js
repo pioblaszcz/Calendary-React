@@ -5,7 +5,7 @@ import { Information, AddInformation, P, ConfirmAnswer, ShowDetalist, ContainerI
 
 import { addEventToCalendary, changeConfirmed, delateDay } from '../../../redux/actions/actions';
 
-function InformationElement({ importantDays, dayFocus, add_event, change_confirmed, isConfirmed, delate_day, isWhite }) {
+function InformationElement({ importantDays, dayFocus, add_event, change_confirmed, isConfirmed, delate_day, isWhite, activeMonth }) {
     const allDay = "00 - 24:00";
     let show = false;
     const [showDayDetalist, setShowDayDetalist] = useState([false, null]);
@@ -13,12 +13,12 @@ function InformationElement({ importantDays, dayFocus, add_event, change_confirm
     const delateDay = day => {
         console.log(day);
         importantDays = importantDays.filter(importantDay => importantDay.description !== day.description);
-
+        console.log()
         delate_day(importantDays);
         change_confirmed(true)
     }
 
-    const informationElement = importantDays.map((importantDay, id) => importantDay ? (importantDay.day === dayFocus
+    const informationElement = importantDays.map((importantDay, id) => importantDay ? (importantDay.day === dayFocus[0] && importantDay.month === dayFocus[1]
         ? <div key={id}>
             <Information isWhite={isWhite}>
                 {show = true}
@@ -72,6 +72,7 @@ const mapStateToProps = state => ({
     importantDays: state.importantDays,
     dayFocus: state.dayFocus,
     isConfirmed: state.isConfirmed,
+    activeMonth: state.month,
     isWhite: state.isWhite,
 })
 

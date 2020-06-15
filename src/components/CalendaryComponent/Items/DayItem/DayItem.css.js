@@ -51,6 +51,7 @@ export const Dott = styled.div`
 `;
 
 export const DayInside = styled.div`
+    cursor: pointer;
     position: absolute;
     width: 13vw;
     height: 13vw;
@@ -60,7 +61,7 @@ export const DayInside = styled.div`
     background-color: cadetblue;
     border-radius: 50%;
     transition: 1s;
-    z-index: 100;
+    z-index: 10000;
     p{
         font-size: 1.5rem;
         color: white;
@@ -71,46 +72,44 @@ export const DayInside = styled.div`
         width: 55px;
         height: 55px;
     }
+    
+    ${({ isFixed }) => isFixed ? 'display: none;' : ''}
+
     ${({ animationActive, activeDayNumber, moveHeight }) => animationActive ? `
-        transform: translate(calc(62vw - ${activeDayNumber}px), calc(73.5vh - ${moveHeight} * 13vw ));
+        transform: translate(calc(63vw - ${activeDayNumber}px), calc(71.4vh - ${moveHeight} * 13vw - ${moveHeight} * -5px));
 
-        // @media(min-width: 300px) and (max-height: 570px){
-        //     transform: translate(calc(62vw - ${activeDayNumber}px), calc(73.5vh - ${moveHeight} * 13vw + 18px));
-        // }
+        @media(max-height: 820px){
+            transform: translate(calc(63vw - ${activeDayNumber}px), calc(71.4vh - ${moveHeight} * 13vw));
+        }
 
-        // @media (min-width: 350px) and (max-height: 750px)
-        // {
-        //     transform: translate(calc(62vw - ${activeDayNumber}px), calc(73.5vh - ${moveHeight} * 13vw - 7px));
-        // }
-
-        // @media(min-width: 350px) and (max-height: 650px){
-        //     transform: translate(calc(62vw - ${activeDayNumber}px), calc(73.5vh - ${moveHeight} * 13vw + 22px));
-        // }
-
-        // @media (min-width: 370px) and (max-height: 840px)
-        // {
-        //     transform: translate(calc(62vw - ${activeDayNumber}px), calc(73.5vh - ${moveHeight} * 13vw - 16px));
-        // }
-
-        // @media (min-width: 370px) and (max-height: 680px)
-        // {
-        //     transform: translate(calc(62vw - ${activeDayNumber}px), calc(73.5vh - ${moveHeight} * 13vw + 22px));
-        // }
-
-        // @media (min-width: 400px) and (max-height: 740px)
-        // {
-        //     transform: translate(calc(62vw - ${activeDayNumber}px), calc(73.5vh - ${moveHeight} * 13vw + 28px));
-        // }
-
-
-        // @media(max-height: 580px)
-        // {
-        //     transform: translate(calc(62vw - ${activeDayNumber}px + 18px), calc(72vh - ${moveHeight} * 13vw - 7px));
-        // }
+        @media (max-height: 670px){
+            transform: translate(calc(63vw - ${activeDayNumber}px), calc(72.2vh - ${moveHeight} * 13vw - ${moveHeight} * -5px));
+        }
 
         @media(min-width: 650px)
         {
             transform: translate(calc(230px - ${activeDayNumber}px), calc(585px - ${moveHeight} * 55px - 20px));
         }
+
+        @media (max-width: 416px) and (max-height: 740px)
+        {
+            transform: translate(calc(63vw - ${activeDayNumber}px), calc(71.4vh - ${moveHeight} * 13vw - ${moveHeight} * -7px));
+        }
+
+        @media (max-width: 375px) and (max-height: 670px)
+        {
+            transform: translate(calc(63vw - ${activeDayNumber}px), calc(72.2vh - ${moveHeight} * 13vw - ${moveHeight} * -5px));
+        }
+
+        @media (max-width: 360px) and (max-height: 640px)
+        {
+            transform: translate(calc(63vw - ${activeDayNumber}px), calc(72.2vh - ${moveHeight} * 13vw - ${moveHeight} * -5px));
+        }
+
+        @media (max-width: 320px) and (max-height: 600px)
+        {
+            transform: translate(calc(65vw - ${activeDayNumber}px), calc(72.2vh - ${moveHeight} * 13vw - ${moveHeight} * -5px));
+        }
+
     ` : ''}
 `;

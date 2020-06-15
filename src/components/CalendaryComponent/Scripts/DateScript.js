@@ -14,12 +14,15 @@ export default function (month) {
         else {
             if (i <= dayFirst) DayTab.push({ day: dayNumberBefore - dayFirst + i, isAtive: false, isFocus: false, dayActive: false, });
             else {
-                if (i - dayFirst === isFocus) DayTab.push({ day: i - dayFirst, isAtive: true, isFocus: true, dayActive: true, });
+                if (i - dayFirst === isFocus) {
+                    if (month === date.getMonth()) DayTab.push({ day: i - dayFirst, isAtive: true, isFocus: true, dayActive: true, });
+                    else DayTab.push({ day: i - dayFirst, isAtive: true, isFocus: true, dayActive: false, });
+                }
                 else DayTab.push({ day: i - dayFirst, isAtive: true, isFocus: false, dayActive: false, });
             }
         }
         if (i === 34 && (DayTab[DayTab.length - 1].day === dayNumber || DayTab[DayTab.length - 1].day < 10)) i = 42;
     }
 
-    return DayTab;
+    return ({ DayTab, month });
 } 

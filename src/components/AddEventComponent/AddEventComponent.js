@@ -5,11 +5,10 @@ import { addEventToCalendary, addImportantDay } from '../../redux/actions/action
 import { AddEventForm } from './components';
 
 function AddEventComponent({ isAddClicked, remove_event, add_important_day, dayFocus, month, isWhite }) {
-
     const handleAddEventSubmit = (values) => {
         remove_event();
         const day = {
-            day: dayFocus,
+            day: dayFocus[0],
             month: month,
             description: values.description,
             houers: values.time ? values.time : "Cały dzień",

@@ -1,10 +1,12 @@
 
 const initialState = {
     month: new Date().getMonth(),
-    dayFocus: new Date().getDate(),
+    monthNow: new Date().getMonth(),
+    dayFocus: [new Date().getDate(), new Date().getMonth()],
     activeDay: new Date().getDate(),
-    importantDays: [{ day: 2, month: 5, description: "Urodziny Taty", houers: "00 - 24:00" }, { day: 18, month: 5, description: "Wystawienie ocen", houers: "08 - 16:00" }, { day: 11, month: 5, description: "Boże ciało", houers: "00 - 24:00" }],
+    importantDays: [{ day: 2, month: 5, description: "Urodziny Taty", houers: "00 - 24:00", isDefault: true }, { day: 18, month: 5, description: "Wystawienie ocen", houers: "08 - 16:00", isDefault: true }],
     isAddClicked: false,
+    isSettingsClicked: false,
     isWhite: true,
     isConfirmed: [],
 }
@@ -37,6 +39,12 @@ export default function (state = initialState, action) {
                 isAddClicked: !state.isAddClicked,
             }
 
+        case "SHOW_OR_HIDE_SETTINGS":
+            return {
+                ...state,
+                isSettingsClicked: !state.isSettingsClicked,
+            }
+
         case "ADD_IMPORTANT_DAY":
             return {
                 ...state,
@@ -60,8 +68,6 @@ export default function (state = initialState, action) {
                 ...state,
                 isWhite: !state.isWhite,
             }
-
-
         default:
             return {
                 ...state,

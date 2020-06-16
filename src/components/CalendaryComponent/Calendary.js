@@ -111,11 +111,15 @@ function Calendary({
                         touchXMove = touchXEnd - touchXStart;
                         console.log(touchXMove, touchXEnd, touchXStart)
                         if (touchXMove > 60 && touchXEnd !== 0) {
-                            change_month(month_active - 1);
-                            setVariable(variable - 8.33);
+                            if (month_active > 0) {
+                                change_month(month_active - 1);
+                                setVariable(variable - 8.33);
+                            }
                         } else if (touchXMove < -60 && touchXEnd !== 0) {
-                            change_month(month_active + 1);
-                            setVariable(variable + 8.33);
+                            if (month_active < 11) {
+                                change_month(month_active + 1);
+                                setVariable(variable + 8.33);
+                            }
                         }
                         touchXStart = 0;
                         touchXEnd = 0;

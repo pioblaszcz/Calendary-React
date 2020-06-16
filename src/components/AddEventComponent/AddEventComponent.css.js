@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const AddComponentContainer = styled.div`
-    z-index: 20000;
+    z-index: 20000000;
     position: absolute;
     background-color: ${({ isWhite, theme }) => isWhite ? `${theme.colors.defaultBgc}` : `${theme.colors.defaultBgcDark}`};
     top: 0;

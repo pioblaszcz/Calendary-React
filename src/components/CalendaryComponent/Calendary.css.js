@@ -176,7 +176,7 @@ export const DayList = styled.ul`
 
 export const BackToActiveDay = styled.div`
     cursor: pointer;
-    z-index: 10000000;
+    z-index: 10000;
     display: flex;
     justify-content: center;
     align-items: center;

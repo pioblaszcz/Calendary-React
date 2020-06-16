@@ -62,7 +62,10 @@ function AddEventForm({ onSubmit, isAddClicked, remove_event, isWhite }) {
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={form.reset}
+                                    onClick={() => {
+                                        form.reset();
+                                        setAllDay(false);
+                                    }}
                                     disabled={submitting || pristine}
                                 >
                                     <i className="fas fa-redo-alt"></i>

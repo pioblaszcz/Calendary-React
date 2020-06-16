@@ -60,8 +60,8 @@ function DayItem({
             isWhite={isWhite}
             isActive={isActive}
             dayActive={activeDay === day && isActive && month === monthNow ? true : false}
-            isFocus={dayFocus[0] === day && isActive && dayFocus[1] === active_month && month === active_month}
-            onClick={() => change_focus_day(day, monthNow)}>
+            isFocus={dayFocus[0] === day && isActive && dayFocus[1] === active_month}
+            onClick={() => isActive ? change_focus_day(day, active_month) : null}>
             {day}
             {
                 dayActive && isActive

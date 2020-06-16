@@ -24,6 +24,10 @@ function Calendary({
 
     let DayTab = [];
 
+    let touchXStart = 0;
+    let touchXEnd = 0;
+    let touchXMove = 0;
+
     for (let i = 0; i < 12; i++) DayTab.push(DateScript(i));
 
     const months = DayTab.map(day => day.month);
@@ -101,6 +105,18 @@ function Calendary({
                     moveRight={month_active < months[5] ? { bool: true, var: variable } : false}
                     moveLeft={month_active > months[5] ? { bool: true, var: variable } : false}
                     move={month_active === months[5] ? variable : false}
+                    onTouchStart={(event) => touchXStart = event.targetTouches[0].clientX}
+                    onTouchMove={(event) => touchXEnd = event.targetTouches[0].clientX}
+                    onTouchEnd={() => {
+                        touchXMove = touchXEnd - touchXStart;
+                        if (touchXMove > 60) {
+                            change_month(month_active + 1);
+                            setVariable(variable + 8.33);
+                        } else if (touchXMove < -60) {
+                            change_month(month_active - 1);
+                            setVariable(variable - 8.33);
+                        }
+                    }}
                 >
                     {DayTab.map((day, id) => (<DayList key={id}>{day}</DayList>))}
                 </MainCalendaryContainer>

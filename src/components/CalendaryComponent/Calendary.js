@@ -109,13 +109,18 @@ function Calendary({
                     onTouchMove={(event) => touchXEnd = event.targetTouches[0].clientX}
                     onTouchEnd={() => {
                         touchXMove = touchXEnd - touchXStart;
-                        if (touchXMove > 60) {
+                        console.log(touchXMove, touchXEnd, touchXStart)
+                        if (touchXMove > 60 && touchXEnd !== 0) {
                             change_month(month_active - 1);
                             setVariable(variable - 8.33);
-                        } else if (touchXMove < -60) {
+                        } else if (touchXMove < -60 && touchXEnd !== 0) {
                             change_month(month_active + 1);
                             setVariable(variable + 8.33);
                         }
+                        touchXStart = 0;
+                        touchXEnd = 0;
+                        touchXMove = 0;
+                        console.log('cps')
                     }}
                 >
                     {DayTab.map((day, id) => (<DayList key={id}>{day}</DayList>))}

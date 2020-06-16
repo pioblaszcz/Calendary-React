@@ -110,11 +110,11 @@ function Calendary({
                     onTouchEnd={() => {
                         touchXMove = touchXEnd - touchXStart;
                         if (touchXMove > 60) {
-                            change_month(month_active + 1);
-                            setVariable(variable + 8.33);
-                        } else if (touchXMove < -60) {
                             change_month(month_active - 1);
                             setVariable(variable - 8.33);
+                        } else if (touchXMove < -60) {
+                            change_month(month_active + 1);
+                            setVariable(variable + 8.33);
                         }
                     }}
                 >
